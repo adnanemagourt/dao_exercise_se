@@ -1,5 +1,6 @@
 package MDP;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -26,7 +27,47 @@ public class Main {
 				break;
 			case 2:
 				System.out.print("Id(0 if unknown): ");
-				
+				long id = scan.nextLong();
+				if(id == 0) {
+					System.out.print("Name (or beginning of name): ");
+					String name1 = scan.nextLine();
+					placedao.getAll(name1);
+				}else {
+					placedao.getOne(id);
+				}
+				break;
+			case 3:
+				System.out.print("Id: ");
+				long id1 = scan.nextLong();
+				System.out.println("Current information:");
+				placedao.getOne(id1);
+				System.out.print("\nNew name: ");
+				String name2 = scan.nextLine();
+				placedao.edit(id1, name2);
+				System.out.println("\nValues edited successfully!");
+				break;
+			case 4:
+				System.out.print("Id: ");
+				long id2 = scan.nextLong();
+				placedao.delete(id2);
+				System.out.println("\nEntry deleted successfully!");
+				break;
+			case 5:
+				System.out.print("Id of departure: ");
+				long id3 = scan.nextLong();
+				Place place1 = placedao.getOne(id3);
+				System.out.print("Id of destination: ");
+				id3 = scan.nextLong();
+				Place place2 = placedao.getOne(id3);
+				System.out.print("Price of trip: ");
+				double price = scan.nextDouble();
+				tripdao.add(new Trip((long) 0, place1, place2, price));
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+			default:
 				break;
 			}
 		}
