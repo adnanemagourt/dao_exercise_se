@@ -76,22 +76,26 @@ public class TripDao extends AbstractDAOA{
         return list;
     }
 
-    
-    public List<Trip> getAll(long deprt, long destn) {
-        List<Trip> list = new ArrayList<>();
+    public List<Trip> getAll(String deprt, String destn) {
+    	List<Trip> list = new ArrayList<>();
         PreparedStatement pst = null;
         ResultSet rs;
-        String sql = "select * from Trip where departure_id =  ? or destination_id = ?";
+        String sql = "select * "
+        		+ "from Trip t"
+        		+ "inner join (select id as departure_id, name as departure_name from place where name like ?) a "
+        		+ "on t.departure_id = a.departure_id"
+        		+ "inner join (select id as destination_id, name as destination name from place where name like ?) b "
+        		+ "on t.destination_id = b.destination_id";
         try {
             pst = connection.prepareStatement(sql);
-            pst.setLong(1, deprt);
-            pst.setLong(2, destn);
+            pst.setString(1, deprt + "%");
+            pst.setString(2, destn + "%");
             rs = pst.executeQuery();
             PlaceDao tmp = new PlaceDao();
             while (rs.next()) {
             	Place departure = tmp.getOne(rs.getLong("departure_id"));
                 Place destination = tmp.getOne(rs.getLong("destination_id"));
-                System.out.println(rs.getLong("id") + "" + departure.getName() + " " + destination.getName() +" " + rs.getDouble("price"));
+                System.out.println(rs.getLong("id") + ": departure: " + departure.getName() + ", destination: " + destination.getName() +", price: " + rs.getDouble("price"));
                 list.add(new Trip(rs.getLong("id"), departure, destination, rs.getDouble("price")));
             }
         } catch (SQLException exp) {
