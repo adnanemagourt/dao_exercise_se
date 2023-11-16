@@ -32,7 +32,7 @@ public class Main {
 				break loop;
 			case 1:
 				System.out.print(properties.getProperty("1_1"));
-				String name = scan.nextLine();
+				String name = scan.next();
 				Place place = new Place((long) 0, name);
 				placedao.add(place);
 				break;
@@ -41,7 +41,7 @@ public class Main {
 				long id = scan.nextLong();
 				if(id == 0) {
 					System.out.print(properties.getProperty("2_2"));
-					String name1 = scan.nextLine();
+					String name1 = scan.next();
 					placedao.getAll(name1);
 				}else {
 					placedao.getOne(id);
@@ -53,7 +53,7 @@ public class Main {
 				System.out.println(properties.getProperty("3_2"));
 				placedao.getOne(id1);
 				System.out.print(properties.getProperty("3_3"));
-				String name2 = scan.nextLine();
+				String name2 = scan.next();
 				placedao.edit(id1, name2);
 				System.out.println(properties.getProperty("3_4"));
 				break;

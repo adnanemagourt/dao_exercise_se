@@ -55,7 +55,7 @@ public class PlaceDao extends AbstractDAOA {
             rs = pst.executeQuery();
             if (rs.next()) {
                 System.out.println(rs.getLong("id") + ": " + rs.getString("name"));
-                return new Place(rs.getLong("id"), rs.getString("dname"));
+                return new Place(rs.getLong("id"), rs.getString("name"));
             }
         } catch (SQLException exp) {
             System.out.println(exp.getMessage());
